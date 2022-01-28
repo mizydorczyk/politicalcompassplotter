@@ -6,7 +6,7 @@ body {
     display: relative;
 }
 
-#center-box{
+#center-box {
     height: 100%;
     width: 100%;
     margin: auto;
@@ -21,23 +21,33 @@ body {
     transform: translate(-50%, -50%);
 }
 
-section{
+section {
     margin: 5px;
     padding: 0px;
 }
 
-section h2{
-    margin:5px 0px 5px 0px;
+section h2 {
+    margin: 5px 0px 5px 0px;
     text-align: center;
     font-size: 40px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
-canvas{
+canvas {
     background-color: black;
     margin-left: 5px;
     margin-right: 5px;
     width: 500px;
-    height: 500px;
+    aspect-ratio: 1;
+}
+
+@media only screen and (max-width: 700px) {
+    canvas {
+        background-color: black;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 85vw;
+        aspect-ratio: 1;
+    }
 }
