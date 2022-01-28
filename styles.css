@@ -27,7 +27,7 @@ section {
 }
 
 section h2 {
-    margin: 5px 0px 5px 0px;
+    margin: 0px 0px 5px 0px;
     text-align: center;
     font-size: 40px;
     font-family: 'Roboto', sans-serif;
@@ -49,5 +49,9 @@ canvas {
         margin-right: 5px;
         width: 85vw;
         aspect-ratio: 1;
+    }
+
+    canvas#right-compass {
+        margin-bottom: 15px;
     }
 }
