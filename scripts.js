@@ -32,14 +32,14 @@ function compassTemplate(id) {
     }
 }
 
-function circle(id, x, y) {
+function circle(id, x, y, color, radius) {
     var canvas = document.getElementById(id);
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
         ctx.beginPath();
-        ctx.arc(x, y, 11, 0, 100 * Math.PI);
+        ctx.arc(x, y, radius, 0, 100 * Math.PI);
         ctx.strokeStyle = "black";
-        ctx.fillStyle = "red";
+        ctx.fillStyle = color;
         ctx.stroke();
         ctx.fill();
     }
@@ -77,6 +77,7 @@ async function getData(fileurl) {
 }
 
 async function plotData(id, array) {
+    var sumx = 0, sumy = 0;
     var x, y;
     console.log(array[0]);
     for (var i = 0; i < array.length; i++) {
@@ -86,8 +87,11 @@ async function plotData(id, array) {
         x = (parseFloat(x) + 1.0) * width / 2;
         y = (-parseFloat(y) + 1.0) * width / 2;
         console.log(x, y);
-        circle(id, x, y);
+        sumx += x;
+        sumy += y;
+        circle(id, x, y, "red", 11);
     }
+    circle(id, sumx/array.length, sumy/array.length, "blue", 11);
 }
 
 window.onload = function () {
