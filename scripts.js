@@ -44,8 +44,41 @@ function circle(id, x, y) {
     }
 }
 
+function getData(fileurl) {
+    var array = [];
+    $(document).ready(() => {
+        $.ajax({
+            url: fileurl,
+            dataType: "text",
+            success: function (data) {
+                var row = data.split(/\r?\n|\r/);
+                for (var i = 0; i < data.length; i++) {
+                    if (row[i] != undefined) {
+                        var cell = row[i].split(";");
+                        if (cell != "") {
+                            array.push(cell);
+                        }
+                    }
+                }
+                console.log(array);
+                return array;
+            }
+        })
+    })
+}
+
+// function plotData(id, array) {
+//     var x, y;
+//     for (var i = 0; i < array.length; i++) {
+//         x = (array[i][0] + 1) * 300;
+//         y = (array[i][1] + 1) * 300;
+//         console.log(x);
+//     }
+// }
+
 window.onload = function () {
     compassTemplate('left-compass');
     compassTemplate('right-compass');
-    circle('left-compass', 300, 300);
+    getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane1.csv"); // dane1.csv
+    getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane2.csv"); // dane2.csv
 };
