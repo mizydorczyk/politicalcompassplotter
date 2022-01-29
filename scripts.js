@@ -49,7 +49,7 @@ function delay() {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve(42);
-        }, 100);
+        }, 250);
     });
 }
 
