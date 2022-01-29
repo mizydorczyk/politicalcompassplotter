@@ -1,19 +1,20 @@
+const width = 600;
+
 function compassTemplate(id) {
-    const width = 600;
     var canvas = document.getElementById(id);
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = '#E84C3D'; //czerwony
+        ctx.fillStyle = '#E84C3D'; // red
         ctx.fillRect(0, 0, width / 2, width / 2);
 
-        ctx.fillStyle = '#3598DB'; //niebieski
+        ctx.fillStyle = '#3598DB'; // blue
         ctx.fillRect(width / 2, 0, width / 2, width / 2);
 
-        ctx.fillStyle = '#2DCC70'; //zielony
+        ctx.fillStyle = '#2DCC70'; // green
         ctx.fillRect(0, width / 2, width / 2, width / 2);
 
-        ctx.fillStyle = '#8D44AD'; //fiolet
+        ctx.fillStyle = '#8D44AD'; // purple
         ctx.fillRect(width / 2, width / 2, width / 2, width / 2);
 
         ctx.lineWidth = 2;
@@ -36,7 +37,7 @@ function circle(id, x, y) {
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
         ctx.beginPath();
-        ctx.arc(x, y, 12, 0, 100 * Math.PI);
+        ctx.arc(x, y, 11, 0, 100 * Math.PI);
         ctx.strokeStyle = "black";
         ctx.fillStyle = "red";
         ctx.stroke();
@@ -44,7 +45,15 @@ function circle(id, x, y) {
     }
 }
 
-function getData(fileurl) {
+function delay() {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve(42);
+        }, 100);
+    });
+}
+
+async function getData(fileurl) {
     var array = [];
     $(document).ready(() => {
         $.ajax({
@@ -60,25 +69,36 @@ function getData(fileurl) {
                         }
                     }
                 }
-                console.log(array);
-                return array;
             }
         })
     })
+    await delay();
+    return await array;
 }
 
-// function plotData(id, array) {
-//     var x, y;
-//     for (var i = 0; i < array.length; i++) {
-//         x = (array[i][0] + 1) * 300;
-//         y = (array[i][1] + 1) * 300;
-//         console.log(x);
-//     }
-// }
+async function plotData(id, array) {
+    var x, y;
+    console.log(array[0]);
+    for (var i = 0; i < array.length; i++) {
+        x = array[i][0].replace(",", ".");
+        y = array[i][1].replace(",", ".");
+        
+        x = (parseFloat(x) + 1.0) * width / 2;
+        y = (-parseFloat(y) + 1.0) * width / 2;
+        console.log(x, y);
+        circle(id, x, y);
+    }
+}
 
 window.onload = function () {
+    var data1, data2
     compassTemplate('left-compass');
     compassTemplate('right-compass');
-    getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane1.csv"); // dane1.csv
-    getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane2.csv"); // dane2.csv
+
+    (async function () {
+        data1 = await getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane1.csv"); // dane1 2021
+        data2 = await getData("https://raw.githubusercontent.com/mizydorczyk/plc/main/dane2.csv"); // dane2 2022
+        await plotData('left-compass', data1);
+        await plotData('right-compass', data2);
+    })();
 };
