@@ -6,7 +6,7 @@ body {
     display: relative;
 }
 
-#center-box {
+#container {
     height: 100%;
     width: 100%;
     margin: auto;
@@ -57,3 +57,5 @@ canvas {
         margin-bottom: 15px;
     }
 }
+
+
